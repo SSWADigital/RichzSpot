@@ -149,33 +149,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  //
-                  Container(child: Image.asset("assets/icons/swa1.png")
-                      //  RichText(
-                      //   text: new TextSpan(
-                      //       text: "D",
-                      //       style: TextStyle(fontSize: 30, color: Colors.blue[900]
-
-                      //           // Theme.of(context)
-                      //           //     .accentTextTheme
-                      //           //     .headline2
-                      //           //     .color
-                      //           ),
-                      //       children: [
-                      //         TextSpan(
-                      //           text: "ua1Care",
-                      //           style: TextStyle(fontSize: 27, color: Colors.blue
-
-                      //               // Theme.of(context)
-                      //               //     .accentTextTheme
-                      //               //     .headline1
-                      //               //     .color
-                      //               ),
-                      //         )
-                      //       ]),
-                      // ),
-                      ),
-                  //
+                  Container(child: Image.asset("assets/icons/swa1.png")),
                   InkWell(
                     onTap: () {
                       locationDialogue();

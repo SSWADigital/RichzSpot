@@ -73,11 +73,7 @@ class _biodatapenggunaState extends State<biodatapengguna> {
             height: 281,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [Color(0xff020438), Color(0xff284184)],
-              ),
+              color: Color(0xFF0477BE)
             ),
             padding: const EdgeInsets.only(
               // left: 128,
@@ -367,7 +363,7 @@ class _biodatapenggunaState extends State<biodatapengguna> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(
-                  color: Color(0xff020438),
+                  color: Color(0xFF0477BE),
                   width: 2,
                 ),
                 boxShadow: [
@@ -391,7 +387,7 @@ class _biodatapenggunaState extends State<biodatapengguna> {
                   Text(
                     "Keluar",
                     style: TextStyle(
-                      color: Color(0xff020438),
+                      color: Color(0xFF0477BE),
                       fontSize: 20,
                       fontFamily: "Inter",
                       fontWeight: FontWeight.w500,

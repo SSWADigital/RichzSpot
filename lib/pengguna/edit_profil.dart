@@ -670,8 +670,7 @@ class _edit_profilState extends State<edit_profil> {
                         },
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(4)),
-                        color:
-                            Theme.of(context).accentTextTheme.headline2.color,
+                        color: Color(0xFF0477BE),
                         elevation: 0,
                         highlightElevation: 0,
                         child: Container(

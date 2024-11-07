@@ -191,14 +191,7 @@ class _laporanpembayaranState extends State<laporanpembayaran>
                                   bottomLeft: Radius.circular(12),
                                   bottomRight: Radius.circular(12),
                                 ),
-                                gradient: LinearGradient(
-                                  begin: Alignment.center,
-                                  end: Alignment.bottomRight,
-                                  colors: [
-                                    Color(0xff020438),
-                                    Color(0xff284184)
-                                  ],
-                                ),
+                                color: Color(0xFF0477BE),
                               ),
                               padding: const EdgeInsets.only(
                                 left: 16,

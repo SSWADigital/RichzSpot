@@ -57,7 +57,7 @@ class _detailabsensiState extends State<detailabsensi>
         _selectedTabIndex = tb.index;
         _tabColor = List.generate(_tabs.length, (index) {
           return index == _selectedTabIndex
-              ? Color(0xff020438)
+              ? Color(0xFF0477BE)
               : Colors.grey[600];
         });
       });
@@ -81,7 +81,7 @@ class _detailabsensiState extends State<detailabsensi>
           Container(
             width: MediaQuery.of(context).size.width,
             height: 100,
-            color: Color(0xff020438),
+            color: Color(0xFF0477BE),
             padding: const EdgeInsets.only(
               top: 20,
               left: 13,
@@ -144,7 +144,7 @@ class _detailabsensiState extends State<detailabsensi>
                   "Rabu, 8 Maret 2023",
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: Color(0xff020438),
+                    color: Color(0xFF0477BE),
                     fontSize: 24,
                     fontFamily: "Inter",
                     fontWeight: FontWeight.w700,
@@ -164,7 +164,7 @@ class _detailabsensiState extends State<detailabsensi>
                         Text(
                           "Check In",
                           style: TextStyle(
-                            color: Color(0xff020438),
+                            color: Color(0xFF0477BE),
                             fontSize: 12,
                           ),
                         ),
@@ -188,7 +188,7 @@ class _detailabsensiState extends State<detailabsensi>
                         Text(
                           "Check Out",
                           style: TextStyle(
-                            color: Color(0xff020438),
+                            color: Color(0xFF0477BE),
                             fontSize: 12,
                           ),
                         ),

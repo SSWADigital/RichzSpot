@@ -2,7 +2,7 @@ name: homital
 description: A new Flutter application.
 
 # The following line prevents the package from being accidentally published to
-# pub.dev using `pub publish`. This is preferred for private packages.
+# pub.dev using pub publish. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
@@ -43,6 +43,9 @@ dependencies:
   webview_flutter: ^2.0.7
   intl:
   google_maps_flutter: ^2.0.5
+  
+  plugin_platform_interface: ^2.0.0
+  geolocator_platform_interface: ^2.0.2
   geolocator: ^7.0.3
   permission_handler: ^8.0.0+1
   flutter_tags: "^0.4.9+1"
@@ -51,6 +54,7 @@ dependencies:
   # http: ^0.12.0+1
   image_picker: ^0.8.4+11
   http: 
+  # quiver: ^2.1.0
   qr_flutter: ^4.0.0
   date_time_picker: ^2.1.0
   pdf: ^3.6.0
@@ -59,10 +63,15 @@ dependencies:
   open_file: ^3.2.1
   flutter_datetime_picker: ^1.5.1
   flutter_image_compress: ^0.6.8
-  camera: ^0.8.1+1
+  # camera: ^0.7.0
  
+  camera: ^0.8.0
   # camera: ^0.7.0+4
   # camera: ^0.5.8+17
+
+dependency_overrides:
+  quiver: ^3.2.2
+
 
 dev_dependencies:
   flutter_test:

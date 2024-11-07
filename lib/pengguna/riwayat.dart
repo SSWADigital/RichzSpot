@@ -156,7 +156,7 @@ class _laporanabsenState extends State<laporanabsen> {
               Container(
                 width: MediaQuery.of(context).size.width,
                 height: 72,
-                color: Color(0xff020438),
+                color: Color(0xFF0477BE),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -265,7 +265,7 @@ class _laporanabsenState extends State<laporanabsen> {
                         width: double.infinity,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(4),
-                          color: Color(0xff020438),
+                          color: Color(0xFF0477BE),
                         ),
                         padding: const EdgeInsets.all(8),
                         child: Row(

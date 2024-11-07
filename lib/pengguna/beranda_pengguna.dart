@@ -250,9 +250,38 @@ class _berandaPenggunaState extends State<berandaPengguna> {
   String perintah;
 
   Future _absen() async {
-    final prefs = await SharedPreferences.getInstance();
+    try {
 
+    final prefs = await SharedPreferences.getInstance();
     id_user = (prefs.get('pegawai_id'));
+
+
+    final double targetLatitude = -7.760944; 
+  final double targetLongitude = 110.337225;
+  final double allowedRadius = 100.0; 
+
+  Position position = await Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.high);
+
+  double distance = Geolocator.distanceBetween(
+      position.latitude, position.longitude, targetLatitude, targetLongitude);
+
+  if (distance > allowedRadius) {
+                                Navigator.of(context, rootNavigator: true).pop();
+
+    showDialog<void>(
+      context: context,
+      builder: (BuildContext dialogContext) {
+        return Alert(
+          title: "Gagal Absen",
+          subTile: "Anda tidak berada di lokasi yang diizinkan untuk absen!.",
+        );
+      },
+    );
+    return;
+  } else {
+                                Navigator.of(context, rootNavigator: true).pop();
+
     if (cek_absen == '0') {
       var req = http.MultipartRequest(
           'POST',
@@ -306,6 +335,10 @@ class _berandaPenggunaState extends State<berandaPengguna> {
         // print(response);
       }
       ambildata();
+    }
+    }
+    } catch (error) {
+      print('Error: $error');
     }
   }
 
@@ -686,14 +719,7 @@ class _berandaPenggunaState extends State<berandaPengguna> {
                                   bottomLeft: Radius.circular(12),
                                   bottomRight: Radius.circular(12),
                                 ),
-                                gradient: LinearGradient(
-                                  begin: Alignment.center,
-                                  end: Alignment.bottomRight,
-                                  colors: [
-                                    Color(0xff020438),
-                                    Color(0xff284184)
-                                  ],
-                                ),
+                                color: Color(0xFF0477BE),
                               ),
                               padding: const EdgeInsets.only(
                                 left: 16,
@@ -842,7 +868,7 @@ class _berandaPenggunaState extends State<berandaPengguna> {
                                       Text(
                                         "Check In",
                                         style: TextStyle(
-                                          color: Color(0xff020438),
+                                          color: Color(0xFF0477BE),
                                           fontSize: 12,
                                         ),
                                       ),
@@ -868,7 +894,7 @@ class _berandaPenggunaState extends State<berandaPengguna> {
                                       Text(
                                         "Check Out",
                                         style: TextStyle(
-                                          color: Color(0xff020438),
+                                          color: Color(0xFF0477BE),
                                           fontSize: 12,
                                         ),
                                       ),
@@ -1057,7 +1083,7 @@ class _berandaPenggunaState extends State<berandaPengguna> {
                   : MaterialButton(
                       onPressed: () async {
                         // Get the image
-                        _pickImage(); // getImage();
+                        // _pickImage(); // getImage();
                         // Show the popup
                         _getjam();
                         doabsen(context);
@@ -1074,7 +1100,7 @@ class _berandaPenggunaState extends State<berandaPengguna> {
                             ),
                           ],
                           color:
-                              cek_absen == "0" ? Color(0xff020438) : Colors.red,
+                              cek_absen == "0" ? Color(0xFF0477BE) : Colors.red,
                         ),
                         padding: const EdgeInsets.symmetric(
                           horizontal: 10,
@@ -1297,93 +1323,136 @@ class _berandaPenggunaState extends State<berandaPengguna> {
   }
 
   void doabsen(BuildContext context) {
-    showDialog<void>(
-      context: context,
-      // false = user must tap button, true = tap outside dialog
-      builder: (BuildContext dialogContext) {
-        return StatefulBuilder(builder: (context, setState) {
-          return Dialog(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12)),
-              insetPadding: EdgeInsets.all(30),
-              child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: Colors.white,
-                  ),
-                  height: 500,
-                  child: Container(
-                    height: 500,
-                    child: ListView(
-                      children: [
-                        SizedBox(height: 10),
-                        _imageFile != null
-                            ? Center(child: Image.file(_imageFile, height: 300))
-                            : Center(
-                                child: Container(
-                                color: Colors.grey,
-                                child: Center(child: Text("Belum Ada Foto")),
-                                height: 300,
-                              )),
-                        SizedBox(height: 10),
-                        Padding(
-                          padding: const EdgeInsets.all(16),
-                          child: Center(
-                              child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Row(
-                                children: [
-                                  Text("Waktu :"),
-                                  Text(jam ?? ""),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Text("Titik Kordinat :"),
-                                  Text(lat),
-                                  Text(","),
-                                  Text(lng),
-                                ],
-                              ),
-                            ],
-                          )),
+  showDialog<void>(
+    context: context,
+    builder: (BuildContext dialogContext) {
+      return StatefulBuilder(builder: (context, setState) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          insetPadding: EdgeInsets.all(30),
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              color: Colors.white,
+            ),
+            height: 500,
+            child: ListView(
+              children: [
+                SizedBox(height: 10),
+                Center(
+                  child: _imageFile != null
+                      ? Image.file(_imageFile, height: 300)
+                      : Container(
+                          color: Colors.grey,
+                          child: Center(child: Text("Belum Ada Foto")),
+                          height: 300,
                         ),
-                        SizedBox(height: 10),
+                ),
+                SizedBox(height: 10),
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            RaisedButton(
-                              // cek_absen == "0" ? Color(0xff020438) : Colors.red,
-                              child: Text("Kirim Absen"),
-                              onPressed: () {
-                                cek_absen == "0"
-                                    ? perintah = "m"
-                                    : perintah = "p";
-                                _absen();
-                                // Add your code here to send the data to the server
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                            RaisedButton(
-                              child: Text("Batal"),
-                              onPressed: () {
-                                print(pegawaiid == "" ? iduser : pegawaiid);
-
-                                Navigator.of(context).pop();
-                              },
-                            ),
+                            Text("Waktu : "),
+                            Text(jam ?? ""),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Text("Titik Kordinat : "),
+                            Text(lat),
+                            Text(", "),
+                            Text(lng),
                           ],
                         ),
                       ],
                     ),
-                  )));
-        });
-      },
-    );
-  }
+                  ),
+                ),
+                SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    _imageFile == null
+                        ? RaisedButton(
+                            onPressed: () async {
+                              await _pickImage();
+                              setState(() {}); // Update UI after image is picked
+                            },
+                            child: Text("Ambil Foto"),
+                          )
+                        : RaisedButton(
+                            onPressed: () {
+                              setState(() {
+                                _imageFile = null; // Clear image
+                              });
+                            },
+                            child: Text("Hapus Foto"),
+                          ),
+                    _imageFile != null
+                        ? RaisedButton(
+                            child: Text("Kirim Absen"),
+                            onPressed: () async {
+
+                              try {
+                                showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (BuildContext loadingContext) {
+                                  return Dialog(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(16.0),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          CircularProgressIndicator(),
+                                          SizedBox(width: 16),
+                                          Text("Mengirim Absen..."),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                              cek_absen == "0" ? perintah = "m" : perintah = "p";
+                              await _absen();
+                              } catch (e) {
+                                // Navigator.of(dialogContext).pop();
+                                print(e);
+                              } finally {
+                                // Navigator.of(context, rootNavigator: true).pop();
+
+                                // Navigator.of(dialogContext).pop();
+                              }
+
+                            },
+                          )
+                        : Container(),
+                    RaisedButton(
+                      child: Text("Batal"),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      });
+    },
+  );
+}
+
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
