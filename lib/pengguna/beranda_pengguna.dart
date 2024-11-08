@@ -12,6 +12,7 @@ import 'package:homital/UI/posisi.dart';
 import 'package:homital/Widget/Alert.dart';
 import 'package:homital/animation/SlideRightRoute.dart';
 import 'package:homital/main.dart';
+import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -251,20 +252,34 @@ class _berandaPenggunaState extends State<berandaPengguna> {
 
   Future _absen() async {
     try {
+final prefs = await SharedPreferences.getInstance();
+  var id_user = prefs.get('pegawai_id');
+  var id_dep = prefs.get('departemen_id');
+  // Response futureDepartemen = await _getDepartementLocation();
 
-    final prefs = await SharedPreferences.getInstance();
-    id_user = (prefs.get('pegawai_id'));
+  final Response = await http.get(Uri.parse("http://103.157.97.200/richzspot/departemen/getData?id=$id_dep"));
 
+    var dataDep = jsonDecode(Response.body);
 
-    final double targetLatitude = -7.760944; 
+  final String depLoc = dataDep["departemen_loc"]; // Pastikan response-nya sesuai dengan format JSON dan memiliki key yang benar
+
+  // Memecah string lat,long dan mengonversinya menjadi double
+  List<String> coordinates = depLoc.split(',');
+  double depTargetLatitude = double.parse(coordinates[0].trim());
+  double depTargetLongitude = double.parse(coordinates[1].trim());
+
+  // Lokasi target dan jarak yang diperbolehkan
+  final double targetLatitude = -7.760944;
   final double targetLongitude = 110.337225;
-  final double allowedRadius = 100.0; 
+  final double allowedRadius = 100.0;
 
-  Position position = await Geolocator.getCurrentPosition(
-      desiredAccuracy: LocationAccuracy.high);
+  // Mendapatkan lokasi saat ini
+  Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
 
+  // Menghitung jarak
   double distance = Geolocator.distanceBetween(
-      position.latitude, position.longitude, targetLatitude, targetLongitude);
+    position.latitude, position.longitude, depTargetLatitude, depTargetLongitude
+  );
 
   if (distance > allowedRadius) {
                                 Navigator.of(context, rootNavigator: true).pop();
@@ -457,7 +472,7 @@ class _berandaPenggunaState extends State<berandaPengguna> {
   //////////////////////////////////////////////////////////
 
   //////////////////////////////////////////////////////////
-
+  var futureDepartemen;
   @override
   void initState() {
     // lihatprofil();
@@ -1451,6 +1466,12 @@ class _berandaPenggunaState extends State<berandaPengguna> {
       });
     },
   );
+}
+
+Future<http.Response> _getDepartementLocation() async {
+  final prefs = await SharedPreferences.getInstance();
+  var idDep = prefs.get('departemen_id');
+  return http.get(Uri.parse('http://103.157.97.200/richzspot/departemen/getData?id=$idDep'));
 }
 
 }

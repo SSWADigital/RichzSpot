@@ -169,8 +169,8 @@ class _SignInState extends State<SignIn> {
 
     final Response = await http
         .post(Uri.parse("http://103.157.97.200/richzspot/login/login"), body: {
-      "username": emailController.text,
-      "password": passwordController.text,
+        "username": emailController.text,
+        "password": passwordController.text,
     });
 
     var datauser = jsonDecode(Response.body);
@@ -224,6 +224,7 @@ class _SignInState extends State<SignIn> {
       // prefs.setString("login_id", datauser[0]['login_id']);
       // prefs.setString("username", datauser[0]['usr_name']);
       prefs.setString("pegawai_id", datauser['user_id']);
+      prefs.setString("departemen_id", datauser['departemen_id']);
 
       prefs.setString("role_kode", datauser['role_kode']);
       // prefs.setString("usr_when_create", datauser[0]['usr_when_create']);
